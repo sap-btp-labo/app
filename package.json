@@ -1,0 +1,125 @@
+{
+  "name": "app",
+  "version": "0.0.1",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "description": "Business Application",
+  "engines": {
+    "node": "^16"
+  },
+  "dependencies": {
+    "@sap/cds": "^6.8",
+    "@sap/audit-logging": "^5",
+    "hdb": "^0.19",
+
+    "@sap-cloud-sdk/http-client": "^2.5",
+    "@sap/xsenv": "^3",
+    "@sap/xssec": "^3",
+    "passport": "^0.4.1",
+
+    "debug": "^4.3",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.96.4"
+  },
+  "sapux": [
+    "app/resources/fiori"
+  ],
+  "scripts": {
+    "start": "cds run"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
+    },
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
+    },
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "requires": {
+      "uaa": {
+        "kind": "xsuaa"
+      },
+      "auth": {
+        "[production]": {
+          "strategy": "JWT"
+        },
+        "[development]": {
+          "strategy": "mock",
+          "users": {
+            "joe": {
+              "roles": [
+                "Admin",
+                "Viewer"
+              ]
+            },
+            "julie": {
+              "roles": [
+                "Viewer"
+              ]
+            },
+            "bob": {
+              "roles": [
+                "Viewer"
+              ]
+            }
+          }
+        }
+      }
+      ,
+      "db": {
+        "[production]": {
+          "kind": "hana-cloud"
+          ,"model": [
+            "db/data-config",
+            "db/data-test"
+          ]
+        },
+        "[development]": {
+          "kind": "sql"
+          ,"model": [
+            "db/data-config",
+            "db/data-test"
+          ]
+        },
+        "model": [
+          "db",
+          "srv"
+        ]
+      }
+      ,
+      "NearEarthObjectWebService": {
+        "kind": "rest",
+        "impl": "srv/external/NearEarthObjectWebService.js",
+        "credentials": {
+          "[production]": {
+            "destination": "app-NASA-api",
+            "path": "neo/rest/v1"
+          },
+          "[development]": {
+            "url": "https://api.nasa.gov/neo/rest/v1"
+          }
+        }
+      }
+    }
+  }
+}
