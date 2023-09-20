@@ -28,7 +28,7 @@ stages:
     cfAppName: "app"
     cfCredentialsId: "deploy-to-cf"
     deployType: "standard"
-    tmsUpload: false
+    tmsUpload: true
 steps:
   artifactPrepareVersion:
     versioningType: "cloud_noTag"
