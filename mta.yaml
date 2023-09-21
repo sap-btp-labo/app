@@ -6,7 +6,7 @@ parameters:
   enable-parallel-deployments: true
 
 build-parameters:
-  before-all:
+  before-all: 
     - builder: custom
       commands:
         - npm install --production
