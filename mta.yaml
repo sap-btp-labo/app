@@ -1,6 +1,6 @@
 _schema-version: '3.2'
 ID: app
-version: 0.0.1
+version: 0.0.2
 
 parameters:
   enable-parallel-deployments: true
@@ -11,6 +11,8 @@ build-parameters:
       commands:
         - npm install --production
         - npx -p @sap/cds-dk cds build --production
+        - npx rimraf /gen/db/src/gen/data
+        - npx rimraf /gen/db/src/gen/csv
 
 modules:
   # ---------------- DATABASE DEPLOYER MODULE ------------------
